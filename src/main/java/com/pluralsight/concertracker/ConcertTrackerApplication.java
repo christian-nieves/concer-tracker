@@ -1,5 +1,10 @@
 package com.pluralsight.concertracker;
 
+import com.pluralsight.concertracker.models.Artist;
+import com.pluralsight.concertracker.models.Concert;
+import com.pluralsight.concertracker.models.Promoter;
+import com.pluralsight.concertracker.models.Venue;
+import com.pluralsight.concertracker.service.ConcertService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

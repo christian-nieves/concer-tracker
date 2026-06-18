@@ -1,5 +1,13 @@
-package com.pluralsight.concertracker;
+package com.pluralsight.concertracker.service;
 
+import com.pluralsight.concertracker.data.ArtistRepository;
+import com.pluralsight.concertracker.data.ConcertRepository;
+import com.pluralsight.concertracker.data.PromoterRepository;
+import com.pluralsight.concertracker.data.VenueRepository;
+import com.pluralsight.concertracker.models.Artist;
+import com.pluralsight.concertracker.models.Concert;
+import com.pluralsight.concertracker.models.Promoter;
+import com.pluralsight.concertracker.models.Venue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

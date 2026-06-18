@@ -1,4 +1,4 @@
-package com.pluralsight.concertracker;
+package com.pluralsight.concertracker.models;
 
 import jakarta.persistence.*;
 

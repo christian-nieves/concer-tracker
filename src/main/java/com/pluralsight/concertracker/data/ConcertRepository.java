@@ -1,5 +1,6 @@
-package com.pluralsight.concertracker;
+package com.pluralsight.concertracker.data;
 
+import com.pluralsight.concertracker.models.Concert;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
