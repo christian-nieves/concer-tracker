@@ -138,4 +138,39 @@ public class ConcertService {
     public List<Promoter> getPromotersByName(String name) {
         return promoterRepository.findByNameContainingIgnoreCase(name);
     }
+
+    // Find concerts by year
+    public List<Concert> getConcertsByYear(int year) {
+        return concertRepository.findByYear(year);
+    }
+
+    // Find concerts by artist name
+    public List<Concert> getConcertsByArtistName(String name) {
+        return concertRepository.findByArtistName(name);
+    }
+
+    // Find concerts by venue name
+    public List<Concert> getConcertsByVenueName(String name) {
+        return concertRepository.findByVenueName(name);
+    }
+
+    // Find concerts by city
+    public List<Concert> getConcertsByCity(String city) {
+        return concertRepository.findByCity(city);
+    }
+
+    // Find concerts by maximum price
+    public List<Concert> getConcertsByMaxPrice(double maxPrice) {
+        return concertRepository.findByMaxPrice(maxPrice);
+    }
+
+    // Find concerts by price range
+    public List<Concert> getConcertsByPriceRange(double minPrice, double maxPrice) {
+        return concertRepository.findByPriceRange(minPrice, maxPrice);
+    }
+
+    // Find concerts by max price and earliest year
+    public List<Concert> getConcertsByMaxPriceAndEarliestYear(double maxPrice, int earliestYear) {
+        return concertRepository.findByMaxPriceAndEarliestYear(maxPrice, earliestYear);
+    }
 }
