@@ -68,4 +68,74 @@ public class ConcertService {
     public boolean isDatabaseEmpty() {
         return venueRepository.count() == 0;
     }
+
+    // Find a venue by its id
+    public Venue getVenueById(Long id) {
+        return venueRepository.findById(id).orElse(null);
+    }
+
+    // Find an artist by its id
+    public Artist getArtistById(Long id) {
+        return artistRepository.findById(id).orElse(null);
+    }
+
+    // Find a promoter by its id
+    public Promoter getPromoterById(Long id) {
+        return promoterRepository.findById(id).orElse(null);
+    }
+
+    // Find a concert by its id
+    public Concert getConcertById(Long id) {
+        return concertRepository.findById(id).orElse(null);
+    }
+
+    // Delete a venue by its id
+    public void deleteVenue(Long id) {
+        venueRepository.deleteById(id);
+    }
+
+    // Delete an artist by its id
+    public void deleteArtist(Long id) {
+        artistRepository.deleteById(id);
+    }
+
+    // Delete a promoter by its id
+    public void deletePromoter(Long id) {
+        promoterRepository.deleteById(id);
+    }
+
+    // Delete a concert by its id
+    public void deleteConcert(Long id) {
+        concertRepository.deleteById(id);
+    }
+
+    // Find venues by city
+    public List<Venue> getVenuesByCity(String city) {
+        return venueRepository.findByCity(city);
+    }
+
+    // Find venues by name containing text
+    public List<Venue> getVenuesByName(String name) {
+        return venueRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    // Find venues by minimum capacity
+    public List<Venue> getVenuesByMinCapacity(int minCapacity) {
+        return venueRepository.findByCapacityGreaterThanEqual(minCapacity);
+    }
+
+    // Find artists by genre
+    public List<Artist> getArtistsByGenre(String genre) {
+        return artistRepository.findByGenre(genre);
+    }
+
+    // Find artists by name containing text
+    public List<Artist> getArtistsByName(String name) {
+        return artistRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    // Find promoters by name containing text
+    public List<Promoter> getPromotersByName(String name) {
+        return promoterRepository.findByNameContainingIgnoreCase(name);
+    }
 }
