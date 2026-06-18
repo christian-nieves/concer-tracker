@@ -173,4 +173,29 @@ public class ConcertService {
     public List<Concert> getConcertsByMaxPriceAndEarliestYear(double maxPrice, int earliestYear) {
         return concertRepository.findByMaxPriceAndEarliestYear(maxPrice, earliestYear);
     }
+
+    // Get revenue per venue
+    public List<Object[]> getRevenuePerVenue() {
+        return concertRepository.getRevenuePerVenue();
+    }
+
+    // Get concert count per venue for busiest venue report
+    public List<Object[]> getConcertCountPerVenue() {
+        return concertRepository.getConcertCountPerVenue();
+    }
+
+    // Get concert count per artist for busiest artist report
+    public List<Object[]> getConcertCountPerArtist() {
+        return concertRepository.getConcertCountPerArtist();
+    }
+
+    // Get average ticket price by year
+    public List<Object[]> getAveragePriceByYear() {
+        return concertRepository.getAveragePriceByYear();
+    }
+
+    // Get capacity report for each concert
+    public List<Object[]> getCapacityReport() {
+        return concertRepository.getCapacityReport();
+    }
 }

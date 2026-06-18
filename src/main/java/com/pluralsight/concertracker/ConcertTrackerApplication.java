@@ -77,6 +77,7 @@ public class ConcertTrackerApplication {
             System.out.println("3) Artists");
             System.out.println("4) Venues");
             System.out.println("5) Promoters");
+            System.out.println("6) Reports");
             System.out.println("0) Quit");
             System.out.print("Choose an option: ");
 
@@ -97,6 +98,9 @@ public class ConcertTrackerApplication {
                     break;
                 case "5":
                     showPromoters(concertService, myScanner);
+                    break;
+                case "6":
+                    showReports(concertService, myScanner);
                     break;
                 case "0":
                     keepRunning = false;
@@ -507,6 +511,129 @@ public class ConcertTrackerApplication {
 
         System.out.println("\n--- Concerts at or below $" + maxPrice + " from " + earliestYear + " onwards ---");
         printConcertList(results);
+    }
+
+    // Reports screen
+    private void showReports(ConcertService concertService, Scanner myScanner) {
+
+        boolean keepRunning = true;
+
+        while (keepRunning) {
+            System.out.println("\n===== Reports =====");
+            System.out.println("1) Revenue per venue");
+            System.out.println("2) Busiest venue and artist");
+            System.out.println("3) Average ticket price by year");
+            System.out.println("4) Capacity report");
+            System.out.println("0) Back");
+            System.out.print("Choose an option: ");
+
+            String userChoice = myScanner.nextLine().trim();
+
+            switch (userChoice) {
+                case "1":
+                    reportRevenuePerVenue(concertService);
+                    break;
+                case "2":
+                    reportBusiestVenueAndArtist(concertService);
+                    break;
+                case "3":
+                    reportAveragePriceByYear(concertService);
+                    break;
+                case "4":
+                    reportCapacity(concertService);
+                    break;
+                case "0":
+                    keepRunning = false;
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    // Revenue per venue report
+    private void reportRevenuePerVenue(ConcertService concertService) {
+
+        List<Object[]> results = concertService.getRevenuePerVenue();
+
+        if (results.isEmpty()) {
+            System.out.println("No data available.");
+            return;
+        }
+
+        System.out.println("\n--- Revenue Per Venue ---");
+        for (Object[] row : results) {
+            String venueName = (String) row[0];
+            double totalRevenue = ((Number) row[1]).doubleValue();
+            System.out.printf("Venue: %-30s | Total Revenue: $%,.2f%n", venueName, totalRevenue);
+        }
+    }
+
+    // Busiest venue and artist report
+    private void reportBusiestVenueAndArtist(ConcertService concertService) {
+
+        List<Object[]> venueResults = concertService.getConcertCountPerVenue();
+        List<Object[]> artistResults = concertService.getConcertCountPerArtist();
+
+        if (venueResults.isEmpty() || artistResults.isEmpty()) {
+            System.out.println("No data available.");
+            return;
+        }
+
+        // First result is the busiest since results are ordered by count descending
+        Object[] busiestVenue = venueResults.get(0);
+        Object[] busiestArtist = artistResults.get(0);
+
+        System.out.println("\n--- Busiest Venue and Artist ---");
+        System.out.println("Busiest Venue:  " + busiestVenue[0] + " (" + busiestVenue[1] + " concerts)");
+        System.out.println("Busiest Artist: " + busiestArtist[0] + " (" + busiestArtist[1] + " concerts)");
+    }
+
+    // Average ticket price by year report
+    private void reportAveragePriceByYear(ConcertService concertService) {
+
+        List<Object[]> results = concertService.getAveragePriceByYear();
+
+        if (results.isEmpty()) {
+            System.out.println("No data available.");
+            return;
+        }
+
+        System.out.println("\n--- Average Ticket Price by Year ---");
+        for (Object[] row : results) {
+            int year = ((Number) row[0]).intValue();
+            double avgPrice = ((Number) row[1]).doubleValue();
+            System.out.printf("Year: %d | Average Price: $%,.2f%n", year, avgPrice);
+        }
+    }
+
+    // Capacity report
+    private void reportCapacity(ConcertService concertService) {
+
+        List<Object[]> results = concertService.getCapacityReport();
+
+        if (results.isEmpty()) {
+            System.out.println("No data available.");
+            return;
+        }
+
+        System.out.println("\n--- Capacity Report ---");
+        for (Object[] row : results) {
+            long concertId = ((Number) row[0]).longValue();
+            String artistName = (String) row[1];
+            String venueName = (String) row[2];
+            int ticketsSold = ((Number) row[3]).intValue();
+            int capacity = ((Number) row[4]).intValue();
+
+            // Calculate percentage full
+            double percentageFull = ((double) ticketsSold / capacity) * 100;
+
+            // Flag if sold out
+            String soldOutFlag = (ticketsSold >= capacity) ? " *** SOLD OUT ***" : "";
+
+            System.out.printf("ID: %d | Artist: %-25s | Venue: %-30s | %d/%d (%.1f%%)%s%n",
+                    concertId, artistName, venueName, ticketsSold, capacity, percentageFull, soldOutFlag);
+        }
     }
 
     // Artists screen
